@@ -3,12 +3,15 @@ import socket, time
 from socket import AF_INET, SOCK_DGRAM
 
 def main():
+        # The udp server is hosted on ocelot
         hostName = "ocelot.aul.fiu.edu"
         portNum = 5071
 
         # UDP socket
         client = socket.socket(AF_INET,SOCK_DGRAM)
-
+        # End the connection if the server takes more than 20 ms to respond
+        client.settimeout(0.02)
+                
         # Prompt user for input
         print 'Send any message to ping the server, send \'q\' to quit.'
         msg = ''
@@ -19,8 +22,6 @@ def main():
                 client.sendto(msg,(hostName,portNum))
                 # Used to calculate rtt
                 sendTimeMillis = int(round(time.time() * 1000))
-                # End the connection if the server takes more than 20 ms to respond
-                client.settimeout(0.02)
                 # Get and display server response
                 serverMsg , serverAdr = client.recvfrom(2048)
                 recieveTimeMillis = int(round(time.time() * 1000))
