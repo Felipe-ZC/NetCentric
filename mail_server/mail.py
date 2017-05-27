@@ -84,9 +84,9 @@ def startEmail(emailData):
 
     clientName = 'User'
     userName= emailData['from'].partition('%40')[0]
-    userServer= emailData['from'].partition('%40')[1]
+    userServer= emailData['from'].partition('%40')[2]
     toName= emailData['to'].partition('%40')[0]
-    toServer= emailData['to'].partition('%40')[1]
+    toServer= emailData['to'].partition('%40')[2]
     #Send HELO command and print server response.
     heloCommand='HELO %s' % clientName
     recvFrom = send_recv(clientSocket, heloCommand, '250')
@@ -132,6 +132,7 @@ def processGET(headersMap):
         valueDict[tempList[0]] = tempList[1]
     print 'vals: ' , vals
     print 'dict' , valueDict
+    return valueDict
 
 def main():
     serverSocket = startServer(5010)
